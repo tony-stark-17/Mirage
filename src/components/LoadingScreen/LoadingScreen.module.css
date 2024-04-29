@@ -1,0 +1,17 @@
+.loading-container{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2%;
+}
+
+.logo{
+    width: 15%;
+}

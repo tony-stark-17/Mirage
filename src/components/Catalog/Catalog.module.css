@@ -1,0 +1,69 @@
+.catalog-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    padding: 2rem 0rem 2rem 0rem;
+}
+
+.filter-container{
+    display: flex;
+    z-index: 1;
+    width: 75vw;
+    height: 15%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.178);
+    border-radius: 0.5rem;
+    padding: 0rem 2rem 0rem 2rem;
+    gap: 2rem;
+    backdrop-filter: blur(5px);
+}
+
+.filter-container p{
+    font-family: Poppins;
+    color: #ff3939;
+    font-weight: bold;
+}
+
+.select-component option{
+    color: black;
+    border-radius: 1px !important;
+    background-color: rgba(255, 0, 0, 0.336) !important;
+}
+
+.product-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 75vw;
+    height: 75%;
+    gap: 2%;
+    z-index: 10;
+    overflow-y: auto;
+}
+
+.product-container::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: transparent;
+}
+
+.product-container::-webkit-scrollbar
+{
+	width: 25px;
+    padding: 1rem;
+	background-color: transparent;
+}
+
+.product-container::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+    background-clip: content-box;
+    border: 9px solid transparent;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #D62929;
+}

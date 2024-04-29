@@ -1,0 +1,28 @@
+.sell-container{
+    display: flex;
+    background-color: black;
+    width: 100vw;
+    height: 40vh;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-direction: column;
+    padding: 2rem 1rem 2rem 1rem;
+}
+
+.sell-container span:nth-child(1){
+    color: #ffffff;
+    text-align: center;
+    font-family: Sora;
+    font-size: 52px;
+    font-weight: 700;
+}
+
+.sell-container span:nth-child(2){
+    color: #a8a8a8;
+    text-align: center;
+    font-family: Sora;
+    font-size: 14px;
+    width: 40%;
+    font-weight: 400;
+}

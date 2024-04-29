@@ -1,0 +1,51 @@
+.landing-container{
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.video-control{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.landing{
+    width: 100vw;
+    height: calc(100vh - 90px);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-family: Poppins;
+    font-size: 1.1rem;
+    align-items: center;
+    justify-content: center;
+    gap: 1%;
+}
+
+.landing img{
+    width: 15%;
+}
+
+.double-down{
+    opacity: 0.5;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
