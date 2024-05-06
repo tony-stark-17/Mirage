@@ -1,0 +1,15 @@
+.navigation-bar{
+    position: sticky;
+    top: 0;
+    display: flex;
+    width: 100vw;
+    height: 90px;
+    background-color: rgba(0, 0, 0, 0.75);
+    /* background: linear-gradient(100deg, rgba(0, 0, 0, 1) 0%, rgb(255 0 0 / 23%) 100%); */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem 2rem 0rem 2rem;
+    backdrop-filter: blur(15px);
+    z-index: 99;
+    border-bottom: 4px solid rgb(255, 255, 255);
+}

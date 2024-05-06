@@ -2,9 +2,13 @@ import {Button, ButtonGroup} from "@nextui-org/react";
 import { useState } from 'react';
 import Img from '../../assets/spectre.jpg';
 import classes from './ProductCard.module.css';
-const ProductCard = () =>{
+const ProductCard = ({ details }) =>{
+    const { brand, model, price, color, transmission, fuel, odometer, registration, owner } = details;
     const [isFlipped, setIsFlipped] = useState(false);
 
+    const numberWithCommas = (x) => {
+        return '₹' + new Intl.NumberFormat('en-IN').format(x);
+    }
     const flipCard = () =>{
         setIsFlipped(!isFlipped);
     }
@@ -16,44 +20,44 @@ const ProductCard = () =>{
                     <img src={Img} className={`${classes['vehicle-img']}`}></img>
                     <div className={`${classes['vehicle-name']}`}>
                         <div className={`flex flex-col w-[50%] ${classes['brand-model']}`}>
-                            <span>Rolls Royce</span>
-                            <span>SPECTRE</span>
+                            <span>{brand}</span>
+                            <span>{model}</span>
                         </div>
-                        <span className={`${classes['vehicle-price']}`}>12 Lakh</span>
+                        <span className={`${classes['vehicle-price']}`}>{numberWithCommas(price)}</span>
                     </div>
                 </div>
                 <div className={`${classes['card-back']}`}>
                     <div className={`${classes['vehicle-name']}`}>
                         <div className={`flex flex-col w-[50%] ${classes['brand-model']}`}>
-                            <span>Rolls Royce</span>
-                            <span>SPECTRE</span>
+                            <span>{brand}</span>
+                            <span>{model}</span>
                         </div>
-                        <span className={`${classes['vehicle-price']}`}>12 Lakh</span>
+                        <span className={`${classes['vehicle-price']}`}>{numberWithCommas(price)}</span>
                     </div>
                     <div className={`${classes['vehicle-details']}`}>
                         <div>
                             <span>Color</span>
-                            <span>English White</span>
+                            <span>{color}</span>
                         </div>
                         <div>
                             <span>Transmission</span>
-                            <span>Automatic</span>
+                            <span>{transmission}</span>
                         </div>
                         <div>
                             <span>Fuel Type</span>
-                            <span>Petrol</span>
+                            <span>{fuel}</span>
                         </div>
                         <div>
                             <span>Odometer</span>
-                            <span>21000</span>
+                            <span>{odometer}</span>
                         </div>
                         <div>
                             <span>Registration</span>
-                            <span>2020</span>
+                            <span>{registration}</span>
                         </div>
                         <div>
                             <span>Owner</span>
-                            <span>2nd</span>
+                            <span>{owner}</span>
                         </div>
                     </div>
                     <div className={`${classes['card-btn-group']}`}>

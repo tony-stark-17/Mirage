@@ -8,6 +8,8 @@ import {
 
 import App from './App.jsx'
 import LoginPage from './components/LoginPage';
+import AdminLogin from './components/AdminLogin';
+import AdminPage from './components/AdminPage';
 import './index.css'
 
 const router = createBrowserRouter([
@@ -17,6 +19,12 @@ const router = createBrowserRouter([
   },{
     path: "/login",
     element: <LoginPage />,
+  },{
+    path: "/adminlogin",
+    element: <AdminLogin />,
+  },{
+    path: '/admin',
+    element: <AdminPage />,
   }
 ]);
 
