@@ -1,0 +1,8 @@
+.detail-container{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.detail-container span:nth-child(1){
+    font-weight: 600;
+}

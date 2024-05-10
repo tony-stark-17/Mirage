@@ -5,8 +5,23 @@ import {
   Button
 } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ selected, setSelected }) => {
+    const navigate = useNavigate();
+    const [adminDetails, setAdminDetails] = useState({});
+    useEffect(() => {
+        const userDetails = JSON.parse(localStorage.getItem('adminDetails'));
+        if(userDetails){
+            setAdminDetails(userDetails);
+        }
+    },[]);
+
+    const logout = () => {
+        localStorage.removeItem('adminDetails');
+        navigate('/adminlogin');
+    }
     return (
         <div className="w-[13%] h-screen bg-[#000000ea] flex flex-col items-center py-10 z-10 px-5 gap-7">
             <div className="h-[5rem] w-full flex flex-col justify-between">
@@ -17,15 +32,15 @@ const Sidebar = ({ selected, setSelected }) => {
             </div>
             <div className="w-full flex items-center justify-between">
                 <User
-                name="Jane Doe"
-                description="Product Designer"
+                name={adminDetails.name}
+                description="Admin"
                 avatarProps={{
                     src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
                 }}
                 className="text-white font-[Poppins]"
                 isFocusable={true}
                 />
-                <Button isIconOnly aria-label="Like" size="sm" className="bg-red-600">
+                <Button isIconOnly aria-label="Like" size="sm" className="bg-red-600" onClick={logout}>
                     <Icon icon="mdi:logout" />
                 </Button>
             </div>

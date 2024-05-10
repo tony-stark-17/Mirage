@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -33,26 +34,34 @@ const LoginPage = () => {
         navigate("/");
     };
     
-    const registerUser = () =>{
-        let userDetails = {
-            name,
-            userType: 'Customer',
-            email,
-            password
+    const registerUser = async () =>{
+        try{
+            const response = await axios.post('http://localhost:3000/register', {email, password, name});
+            if(response.data.success){
+                alert('User registered successfully, You may now login');
+            }else{
+                alert('User registration failed')
+            }
+        }catch(error){
+            alert('Error during registration, Are you sure you aren\'t already registered?');
+            console.log('Error during register:', error);
         }
-        localStorage.setItem("userDetails", JSON.stringify(userDetails));
-        navigate("/");
     }
 
-    const signIn = () => {
-        let userDetails = {
-            name: "John Doe",
-            userType: 'Customer',
-            email,
-            password
+    const signIn = async () => {
+        try{
+            const response = await axios.post('http://localhost:3000/login', {email, password});
+            if(response.data.success){
+                localStorage.setItem("userDetails", JSON.stringify(response.data.data));
+                navigate('/');
+            }else{
+                alert("Invalid credentials");
+            }
+
+        }catch(error){
+            alert('Error during login');
+            console.log('Error during login:', error);
         }
-        localStorage.setItem("userDetails", JSON.stringify(userDetails));
-        navigate("/");
     }
 
     return (
@@ -158,7 +167,7 @@ const LoginPage = () => {
                                         }}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
-                                    <Button className="rounded-md bg-red-700 font-[Sora]" onClick={registerUser}>
+                                    <Button className="rounded-md bg-red-700 font-[Sora]" onClick={() => registerUser()}>
                                         Register
                                     </Button>
                                 </CardBody>

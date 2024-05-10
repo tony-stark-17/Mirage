@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { BackgroundGradientAnimation } from "../ui/background-gradient-animation";
-import { BackgroundBeams } from "../ui/background-beams";
-import {Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell} from "@nextui-org/react";
-import { Icon } from '@iconify/react';
-import Logo from '../../assets/logo.svg';
-
+import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 
-import classes from './AdminPage.module.css';
 import ManageVehicles from "./ManageVehicles";
 import ManageBooking from "./ManageBooking";
+import { useNavigate } from "react-router-dom";
 const AdminPage = () => {
+    const navigate = useNavigate();
     const [selected, setSelected] = useState('vehicles');
+    useEffect(() => {
+        if(!localStorage.getItem('adminDetails')){
+            navigate('/adminlogin');
+        }
+    }, [])
     return (
         <div className="flex">
             <Sidebar selected={selected} setSelected={setSelected}/>

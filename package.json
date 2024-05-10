@@ -23,6 +23,7 @@
     "@nextui-org/tabs": "^2.0.29",
     "@react-three/fiber": "^8.16.2",
     "autoprefixer": "^10.4.19",
+    "axios": "^1.6.8",
     "clsx": "^2.1.1",
     "framer-motion": "^11.1.7",
     "mini-svg-data-uri": "^1.4.4",

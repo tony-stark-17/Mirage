@@ -7,20 +7,17 @@ import {
     Popover,
     PopoverTrigger,
     PopoverContent,
-    Avatar,
     Button,
     User,
-    Dropdown,
-    DropdownTrigger,
-    DropdownMenu,
-    DropdownItem
 } from "@nextui-org/react";
 import Logo from "../../assets/logo.svg";
 import classes from "./NavigationBar.module.css";
+import NavigationSidebar from "../NavigationSidebar";
 
 const NavigationBar = ({ userDetails }) => {
     const navigate = useNavigate();
     const [scrollPosition, setScrollPosition] = useState(0);
+    const [drawer, setDrawer] = useState(false);
     const { name, userType } = userDetails;
     const handleScroll = () => {
         const position = window.pageYOffset;
@@ -39,18 +36,13 @@ const NavigationBar = ({ userDetails }) => {
         };
     }, []);
     return (
+        <>
         <div className={`${classes["navigation-bar"]}`}>
-            <Dropdown placement="bottom-start">
-                <DropdownTrigger>
-                    <Icon
-                        icon="material-symbols-light:menu"
-                        className="cursor-pointer text-white w-auto h-[40%]"
-                    />
-                </DropdownTrigger>
-                <DropdownMenu aria-label="Static Actions">
-                    <DropdownItem key={'adminlogin'} onClick={()=> navigate('/adminlogin')}>Admin Login</DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
+            <Icon
+                icon={drawer ? 'material-symbols-light:close' : "material-symbols-light:menu"}
+                className="cursor-pointer text-white w-auto h-[40%]"
+                onClick={() => setDrawer(!drawer)}
+            />
             <AnimatePresence>
                 {scrollPosition > 466 && (
                     <motion.img
@@ -83,7 +75,7 @@ const NavigationBar = ({ userDetails }) => {
                             <>
                             <User
                                 name={name}
-                                description={userType}
+                                description='Customer'
                                 avatarProps={{
                                     src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
                                 }}
@@ -108,7 +100,7 @@ const NavigationBar = ({ userDetails }) => {
                                 <Button
                                 color="default"
                                 size="sm"
-                                className="bg-primary text-white"
+                                className="bg-red-700 text-white"
                                 onClick={() => navigate('/login')}
                                 >
                                     Sign In
@@ -121,6 +113,8 @@ const NavigationBar = ({ userDetails }) => {
                 </PopoverContent>
             </Popover>
         </div>
+        <NavigationSidebar open={drawer} />
+        </>
     );
 };
 

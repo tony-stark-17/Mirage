@@ -1,105 +1,45 @@
+import axios from "axios";
 import { Select, SelectItem, Button } from "@nextui-org/react";
 import { AuroraBackground } from "../ui/aurora-background";
 import ProductCard from "./ProductCard";
 
 import classes from "./Catalog.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Catalog = () => {
-    let brands = ["Mercedes-Benz", "BMW", "Rolls Royce"];
-    let fuelTypes = ["Petrol", "Diesel", "Electric", "Hybrid"];
-    let segments = ["SUV", "Sedan", "Coupe", "Convertible", "Hatchback", "Wagon", "Van", "Truck", "Bus"]
-    let vehicles = [
-        {
-            brand: "Mercedes-Benz",
-            model: "Spectro",
-            segment: "SUV",
-            price: 10000000,
-            color: "Black",
-            transmission: "Automatic",
-            fuel: "Petrol",
-            odometer: "2000 km",
-            registration: "2021",
-            owner: "1"
-        },
-        {
-            brand: "Mercedes-Benz",
-            model: "Spectre",
-            segment: "SUV",
-            price: 20000000,
-            color: "Black",
-            transmission: "Automatic",
-            fuel: "Petrol",
-            odometer: "2000 km",
-            registration: "2021",
-            owner: "1"
-        },
-        {
-            brand: "Mercedes-Benz",
-            model: "Spectra",
-            segment: "Sedan",
-            price: 20000000,
-            color: "Black",
-            transmission: "Automatic",
-            fuel: "Petrol",
-            odometer: "2000 km",
-            registration: "2021",
-            owner: "1"
-        },
-        {
-            brand: "Mercedes-Benz",
-            model: "Spectre",
-            segment: "SUV",
-            price: 20000000,
-            color: "Black",
-            transmission: "Automatic",
-            fuel: "Petrol",
-            odometer: "2000 km",
-            registration: "2021",
-            owner: "1"
-        },
-        {
-            brand: "Mercedes-Benz",
-            model: "Spectre",
-            segment: "SUV",
-            price: 20000000,
-            color: "Black",
-            transmission: "Automatic",
-            fuel: "Petrol",
-            odometer: "2000 km",
-            registration: "2021",
-            owner: "1"
-        },
-        {
-            brand: "Mercedes-Benz",
-            model: "Spectre",
-            segment: "SUV",
-            price: 20000000,
-            color: "Black",
-            transmission: "Automatic",
-            fuel: "Petrol",
-            odometer: "2000 km",
-            registration: "2021",
-            owner: "1"
-        },
-        {
-            brand: "Mercedes-Benz",
-            model: "Spectre",
-            segment: "SUV",
-            price: 20000000,
-            color: "Black",
-            transmission: "Automatic",
-            fuel: "Petrol",
-            odometer: "2000 km",
-            registration: "2021",
-            owner: "1"
-        }
-    ];
+    let segments = ['Hatchback', 'Sedan', 'SUV', 'Crossover', 'Coupe', 'Convertible', 'Wagon', 'Van', 'Truck', 'Minivan', 'Bus', 'Pickup', 'Off-road', 'Electric', 'Hybrid', 'Luxury', 'Sports', 'Super', 'Muscle', 'Classic', 'Exotic'];
+    let fuels = ['Petrol', 'Diesel', 'Electric', 'Hybrid'];
     let filterBrand = "";
     let filterSegment = "";
     let filterFuel = "";
     let filterPrice = "";
+    const [brands, setBrands] = useState([]);
+    const [vehicles, setVehicles] = useState([]);
     const [filteredVehicles, setFilteredVehicles] = useState(vehicles);
+
+    const fetchVehicles = async () => {
+        try {
+            let tempBrands = [];
+            const response = await axios.get('http://localhost:3000/vehicles');
+            const getBrands = await axios.get('http://localhost:3000/brands');
+            setVehicles(response.data)
+            const { data } = getBrands;
+            data.map((brand) => {
+                tempBrands.push(brand.brand);
+            });
+            setBrands(tempBrands)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        fetchVehicles()
+    },[])
+
+    useEffect(()=>{
+        setFilteredVehicles(vehicles)
+    }, [vehicles])
 
     const enableScroll = () => {
         //  document.removeEventListener('wheel', preventDefault, false)
@@ -130,14 +70,14 @@ const Catalog = () => {
     }
 
     const populateFuelTypes = () => {
-        return fuelTypes.map((fuel, index) => {
+        return fuels.map((fuel, index) => {
             return <SelectItem key={fuel}>{fuel}</SelectItem>;
         });
     }
 
     const vehicleList = () => {
         return filteredVehicles.map((vehicle, index) => {
-            return <ProductCard details={vehicle} />;
+            return <ProductCard key={vehicle.v_id} details={vehicle} />;
         });
     }
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { Tabs, Tab, Input, Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react'
@@ -10,12 +11,34 @@ import classes from './AdminLogin.module.css';
 const AdminLogin = () => {
     const navigate = useNavigate();
     const [state, setState] = useState('loading');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         setTimeout(() => {
+            const adminDetails = localStorage.getItem('adminDetails');
             setState('loaded');
+            if(adminDetails){
+                navigate('/admin');
+            }
         }, 1000)
     }, [])
+
+    const signIn = async () => {
+        try{
+            const response = await axios.post('http://localhost:3000/adminlogin', {email, password});
+            if(response.data.success){
+                localStorage.setItem("adminDetails", JSON.stringify(response.data.data));
+                navigate('/admin');
+            }else{
+                alert("Invalid credentials");
+            }
+
+        }catch(error){
+            alert('Error during login');
+            console.log('Error during login:', error);
+        }
+    }
 
     const goBack = () => {
         navigate('/');
@@ -26,7 +49,7 @@ const AdminLogin = () => {
             <div className={`${classes['login-container']}`}>
                 <div className='w-[25%] py-10 px-8 flex flex-col gap-44'>
                     <img src={Logo} className='w-[25%]'/>
-                    <span className='text-white font-[Sora] font-semibold text-5xl'>Start your <span className='font-light'>journey</span> with us</span>
+                    <span className='text-white font-[Sora] font-semibold text-5xl'>Manage your <span className='font-light'>dealership</span> over here</span>
                 </div>
                 <div className='w-[75%] flex flex-col py-10 px-8 backdrop-blur-md items-center justify-center bg-[#00000069]'>
                     <Tabs aria-label="Options" className="w-[500px]" classNames={{
@@ -47,6 +70,7 @@ const AdminLogin = () => {
                                             label="Email"
                                             labelPlacement='outside'
                                             placeholder="Enter your email"
+                                            onChange={(e) => setEmail(e.target.value)}
                                             classNames={{
                                                 inputWrapper: '!bg-white rounded-md',
                                                 input: '!text-black'
@@ -57,12 +81,13 @@ const AdminLogin = () => {
                                             label="Password"
                                             labelPlacement='outside'
                                             placeholder="Enter your password"
+                                            onChange={(e) => setPassword(e.target.value)}
                                             classNames={{
                                                 inputWrapper: '!bg-white rounded-md',
                                                 input: '!text-black'
                                             }}
                                         />
-                                        <Button className="rounded-md bg-red-700 font-[Sora]">
+                                        <Button className="rounded-md bg-red-700 font-[Sora]" onClick={signIn}>
                                             Sign In
                                         </Button>
                                     </CardBody>

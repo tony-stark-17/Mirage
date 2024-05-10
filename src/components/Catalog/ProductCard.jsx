@@ -1,9 +1,10 @@
+import axios from "axios";
 import {Button, ButtonGroup} from "@nextui-org/react";
 import { useState } from 'react';
 import Img from '../../assets/spectre.jpg';
 import classes from './ProductCard.module.css';
 const ProductCard = ({ details }) =>{
-    const { brand, model, price, color, transmission, fuel, odometer, registration, owner } = details;
+    const { v_id, brand, model, price, color, transmission, fuel, odometer, registration, owner } = details;
     const [isFlipped, setIsFlipped] = useState(false);
 
     const numberWithCommas = (x) => {
@@ -13,13 +14,31 @@ const ProductCard = ({ details }) =>{
         setIsFlipped(!isFlipped);
     }
 
+    const bookVehicle = async () => {
+        const { uid } = JSON.parse(localStorage.getItem('userDetails'));
+        try{
+            const response= await axios.post('http://localhost:3000/bookVehicle', {
+                u_id: uid,
+                v_id: v_id
+            });
+            if(response.data.success){
+                alert('Vehicle Booked Successfully!');
+            }
+        }catch(error){
+            console.log(error);
+            if(error.response.data == 'Vehicle already booked!'){
+                alert('Vehicle already booked!');
+            }
+        }
+    }
+
     return(
         <div className={` ${classes['card-container']}`}>
             <div className={`${classes['card-inner']} ${isFlipped && classes['card-flipped']}`} onClick={flipCard}>
                 <div className={`${classes['card-front']}`}>
                     <img src={Img} className={`${classes['vehicle-img']}`}></img>
                     <div className={`${classes['vehicle-name']}`}>
-                        <div className={`flex flex-col w-[50%] ${classes['brand-model']}`}>
+                        <div className={`flex flex-col w-[60%] ${classes['brand-model']}`}>
                             <span>{brand}</span>
                             <span>{model}</span>
                         </div>
@@ -28,7 +47,7 @@ const ProductCard = ({ details }) =>{
                 </div>
                 <div className={`${classes['card-back']}`}>
                     <div className={`${classes['vehicle-name']}`}>
-                        <div className={`flex flex-col w-[50%] ${classes['brand-model']}`}>
+                        <div className={`flex flex-col w-[60%] ${classes['brand-model']}`}>
                             <span>{brand}</span>
                             <span>{model}</span>
                         </div>
@@ -61,7 +80,7 @@ const ProductCard = ({ details }) =>{
                         </div>
                     </div>
                     <div className={`${classes['card-btn-group']}`}>
-                        <Button className="w-[49%] rounded-md bg-[#B40000]">
+                        <Button className="w-[49%] rounded-md bg-[#B40000]" onClick={bookVehicle}>
                             Book Vehicle
                         </Button>
                         <Button variant="bordered" className="w-[49%] rounded-md border-[#B40000] text-[#B40000]">
