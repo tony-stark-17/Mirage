@@ -4,6 +4,7 @@ The project is 90% complete, Currently have no intentions of finishing it but it
 
 ## Features
 - User registration and authentication
+- Admin panel
 - Vehicle listing and search functionality
 
 ## Technologies Used
