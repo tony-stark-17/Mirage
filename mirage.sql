@@ -15,6 +15,9 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Dumping structure for table mirage.admins
+CREATE DATABASE `mirage`;
+USE `mirage`;
+
 CREATE TABLE IF NOT EXISTS `admins` (
   `a_id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
