@@ -230,7 +230,6 @@ app.put('/bookings/:id', async (req, res) => {
 });
 
 app.get('/getBookings', async (req, res) => {
-    const { id } = req.params;
     try{
         const bookings = await db('bookings').select('*').join('vehicles', 'bookings.v_id', 'vehicles.v_id').join('users', 'bookings.u_id', 'users.uid');
         res.json(bookings || {})
